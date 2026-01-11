@@ -1,0 +1,64 @@
+import Form, { FormItemTypes, type FormPropsItem } from '@/components/Form'
+import React, { useRef, useState } from 'react'
+import { CFContainer } from './styles'
+import { Button } from '@/styles/common.styles'
+
+const formData: FormPropsItem[] = [
+    {
+        label: "菜谱名称",
+        key: "name",
+        type: FormItemTypes.INPUT,
+        value: null,
+        require: true,
+    },
+    {
+        label: "封面",
+        key: "coverImg",
+        type: FormItemTypes.UPLOAD_IMG,
+        value: null,
+        require: true,
+    },
+    {
+        label: "难度系数",
+        key: "level",
+        type: FormItemTypes.STAR,
+        value: null,
+        require: true,
+    },
+    {
+        label: "其他备注",
+        key: "remark",
+        type: FormItemTypes.TEXTAREA,
+        value: null,
+        require: false,
+    }
+]
+
+
+const CreateFood: React.FC = () => {
+    const [step, setStep] = useState(0)
+    const baseData = useRef<Record<string | symbol, any>>(null)
+    const formChange = (data: Record<string | symbol, any>) => {
+        baseData.current = data
+    }
+    const stepComponent = (step: number) => {
+        switch (step) {
+            case 0:
+                return <>
+                    <h1 className='title'>新建食谱</h1>
+                    <Form onChange={formChange} data={formData}></Form>
+                </>
+            case 1:
+                return <>
+                    <div>1111</div>
+                </>
+        }
+    }
+    return (
+        <CFContainer>
+            {stepComponent(step)}
+            <Button onClick={() => setStep(prev => prev + 1)} className='submit-btn'>下一步</Button>
+        </CFContainer>
+    )
+}
+export default CreateFood
