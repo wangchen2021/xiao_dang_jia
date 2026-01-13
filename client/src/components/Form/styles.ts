@@ -117,7 +117,7 @@ export const FormControl = styled.div`
 `;
 
 // 图片上传区域样式（美化上传框，贴合菜谱风格 + 居中适配）
-export const UploadImgArea = styled.div`
+export const UploadImgArea = styled.label`
   border: 2px dashed ${themeColors.borderLight};
   border-radius: 12px;
   padding: 15px 20px;
@@ -126,6 +126,14 @@ export const UploadImgArea = styled.div`
   transition: all 0.3s ease;
   background-color: #fff;
   width: 80%; // 和输入框宽度统一
+  height: 170px;
+
+  .img{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 
   &:hover {
     border-color: ${themeColors.uploadHover};
@@ -155,7 +163,7 @@ export const UploadImgText = styled.p`
   line-height: 1.5;
 
   &::after {
-    content: '（支持jpg/png格式，大小不超过2MB）';
+    content: '（支持jpg/png格式，大小不超过10MB）';
     display: block;
     font-size: 12px;
     margin-top: 4px;
@@ -169,18 +177,4 @@ export const StarArea = styled.div`
   display: flex;
   gap: 8px;
   justify-content: center; // 星级本身也居中
-`;
-
-// 单个星星样式（美化星级，增加交互）
-export const StarItem = styled.span`
-  color: ${themeColors.star};
-  font-size: 24px;
-  margin-right: 0;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    transform: scale(1.1);
-    filter: brightness(1.1);
-  }
 `;

@@ -12,6 +12,9 @@ export const theme = {
         secondaryHover: '#e88a3c',
         success: "#59cac3",
         successHover:"#6de2da",
+        danger:"#f5222d",
+        warning:"#faad14",
+        info:"#1890ff",
         // 文本色（保证可读性）
         textPrimary: '#333333',
         textSecondary: '#666666',

@@ -1,4 +1,4 @@
-import Form, { FormItemTypes, type FormPropsItem } from '@/components/Form'
+import Form, { FormItemTypes, type FormExposedMethods, type FormPropsItem } from '@/components/Form'
 import React, { useRef, useState } from 'react'
 import { CFContainer } from './styles'
 import { Button } from '@/styles/common.styles'
@@ -34,19 +34,25 @@ const formData: FormPropsItem[] = [
     }
 ]
 
-
 const CreateFood: React.FC = () => {
     const [step, setStep] = useState(0)
     const baseData = useRef<Record<string | symbol, any>>(null)
-    const formChange = (data: Record<string | symbol, any>) => {
-        baseData.current = data
+    const formRef = useRef<FormExposedMethods>(null)
+    const next = () => {
+        if (step === 0) {
+            const data = formRef.current?.submit()
+            if (data) {
+                baseData.current = data
+                setStep(prev => prev + 1)
+            }
+        }
     }
     const stepComponent = (step: number) => {
         switch (step) {
             case 0:
                 return <>
                     <h1 className='title'>新建食谱</h1>
-                    <Form onChange={formChange} data={formData}></Form>
+                    <Form ref={formRef} data={formData}></Form>
                 </>
             case 1:
                 return <>
@@ -57,7 +63,7 @@ const CreateFood: React.FC = () => {
     return (
         <CFContainer>
             {stepComponent(step)}
-            <Button onClick={() => setStep(prev => prev + 1)} className='submit-btn'>下一步</Button>
+            <Button onClick={next} className='submit-btn'>下一步</Button>
         </CFContainer>
     )
 }

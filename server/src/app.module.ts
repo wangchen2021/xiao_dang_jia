@@ -10,24 +10,37 @@ import { validationSchema } from './config/env/validation.schema';
 import { LogsService } from './common/utils/logsUtil/logs.service';
 import { LogsModule } from './common/utils/logsUtil/logs.module';
 import { UtilsModule } from './common/utils/utils.module';
+import { CosModule } from './modules/cos/cos.module';
+import { FoodModule } from './modules/food/food.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      // 加载对应环境的配置文件
-      envFilePath: path.resolve(
-        process.cwd(),
-        `src/config/env/.env.${process.env.NODE_ENV || 'development'}`,
-      ),
-      // 启用全局配置（所有模块可注入 ConfigService）
+      envFilePath: [
+        // 1. 公共配置文件（所有环境共享）
+        path.resolve(process.cwd(),
+          'src',
+          'config',
+          'env',
+          '.env'
+        ),
+        // 2. 环境专属配置文件（保留你的原有逻辑，规范路径拼接）
+        path.resolve(
+          process.cwd(),
+          'src',
+          'config',
+          'env',
+          `.env.${process.env.NODE_ENV || 'development'}`,
+        ),
+      ],
       isGlobal: true,
-      // 配置校验规则
       validationSchema,
-      // 允许环境变量覆盖配置文件
       expandVariables: true,
     }),
     LogsModule,
     UtilsModule,
+    CosModule,
+    FoodModule,
   ],
   controllers: [AppController],
   providers: [
