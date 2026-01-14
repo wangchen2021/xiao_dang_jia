@@ -1,0 +1,1 @@
+export const CDN=import.meta.env.VITE_CDN_URL;

@@ -2,6 +2,7 @@ import Form, { FormItemTypes, type FormExposedMethods, type FormPropsItem } from
 import React, { useRef, useState } from 'react'
 import { CFContainer } from './styles'
 import { Button } from '@/styles/common.styles'
+import PrepareStep from './components/PrepareStep'
 
 const formData: FormPropsItem[] = [
     {
@@ -35,7 +36,7 @@ const formData: FormPropsItem[] = [
 ]
 
 const CreateFood: React.FC = () => {
-    const [step, setStep] = useState(0)
+    const [step, setStep] = useState(1)
     const baseData = useRef<Record<string | symbol, any>>(null)
     const formRef = useRef<FormExposedMethods>(null)
     const next = () => {
@@ -44,6 +45,7 @@ const CreateFood: React.FC = () => {
             if (data) {
                 baseData.current = data
                 setStep(prev => prev + 1)
+                window.scrollTo(0, 0)
             }
         }
     }
@@ -56,7 +58,8 @@ const CreateFood: React.FC = () => {
                 </>
             case 1:
                 return <>
-                    <div>1111</div>
+                     <h1 className='title'>准备环节</h1>
+                     <PrepareStep></PrepareStep>
                 </>
         }
     }
